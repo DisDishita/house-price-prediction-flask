@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>House Price Predictor</title>
+</head>
+
+<body>
+
+<h2>House Price Predictor</h2>
+
+<input type="number" id="sqft" placeholder="Enter Square Feet">
+<button onclick="predictPrice()">Predict</button>
+
+<h3 id="result"></h3>
+
+<script>
+async function predictPrice() {
+    const sqft = document.getElementById("sqft").value;
+
+    const response = await fetch("/predict", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ sqft: sqft })
+    });
+
+    const data = await response.json();
+
+    document.getElementById("result").innerText =
+        "Predicted Price: $" + data.price;
+}
+</script>
+
+</body>
+</html>
